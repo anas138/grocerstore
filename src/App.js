@@ -16,7 +16,7 @@ function App() {
       </Route>
      <h1>anas</h1>
      <button onClick={()=>UseDispatch(Increment())}>increment</button>
-     <label>anas</label>
+     
      
     </div>
     </Router>
