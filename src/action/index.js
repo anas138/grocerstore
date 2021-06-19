@@ -1,6 +1,12 @@
-const Increment=()=>{
+export const Increment=()=>{
     return{
         type:'increment'
     }
 }
-export default Increment
+
+export const Change=(nr)=>{
+return{
+    type:'change',
+    payload:nr
+}
+}

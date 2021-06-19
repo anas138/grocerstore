@@ -58,6 +58,12 @@
 }
 #addCategory{
     font-size: 25px;
+    margin: 10px;
+    color: #0d6efd;
+    cursor: pointer;
+}
+#addCategory:hover{
+    transform: scale(1.5) ;
 }
 #category-form{
     position: absolute;
@@ -83,4 +89,10 @@
     width: 100%;
     padding: 5px;
     margin: 5px;
+}
+#catDiv1{
+    display: flex;
+    background-color: white;
+    align-items: center;
+    margin: 10px;
 }
