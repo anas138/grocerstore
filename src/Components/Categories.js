@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import { FaRegPlusSquare } from "react-icons/fa";
 import {useDispatch,useSelector} from 'react-redux'
 import{Change} from '../action/index'
@@ -7,10 +7,24 @@ import axios from 'axios';
 
 
 function Categories() {
-    const [cat,setCat]=useState(0);
-    const UseDispatch=useDispatch();
-    const [changeInput,setChangeInput]=useState('');
     const change=useSelector(state=>state.ChangeCat);
+    const UseDispatch=useDispatch();
+    useEffect(()=>{
+        axios.get('http://localhost:3001/category')
+        .then(res=>{
+            console.log(res.data);
+            UseDispatch(Change(res.data));
+            console.log('anas',change)
+        })
+
+    },[])
+
+
+
+    const [cat,setCat]=useState(0);
+    
+    const [changeInput,setChangeInput]=useState('');
+    
     
     const click=()=>{
         //console.log(changeInput);
@@ -61,7 +75,7 @@ function Categories() {
                
                 </div>
             </div>
-            
+                      
             
         </div>
     )
