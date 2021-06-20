@@ -2,22 +2,29 @@ import React,{useState} from 'react'
 import { FaRegPlusSquare } from "react-icons/fa";
 import {useDispatch,useSelector} from 'react-redux'
 import{Change} from '../action/index'
+import axios from 'axios';
 
 
 
 function Categories() {
     const [cat,setCat]=useState(0);
     const UseDispatch=useDispatch();
-    const [changeInput,setChangeInput]=useState();
+    const [changeInput,setChangeInput]=useState('');
     const change=useSelector(state=>state.ChangeCat);
     
     const click=()=>{
-        console.log(changeInput);
+        //console.log(changeInput);
+        axios.post('http://localhost:3001/category',{
+            name:changeInput,
+        }).then(res=>{
+            console.log(res);
+        })
     }
     const ChangeInput=async(e)=>{
-        await UseDispatch(Change(e.target.value));
-        setChangeInput(change);
-        console.log('anas');
+        //await UseDispatch(Change(e.target.value));
+        //setChangeInput(change);
+        //console.log('anas');
+        setChangeInput(e.target.value);
     }
     return (
         
@@ -30,13 +37,9 @@ function Categories() {
                {cat==1?<form id='category-form'>
                    <buton type='button' className="btn btn-danger" onClick={()=>{setCat(0)}}>X</buton>
                    <h2>Add category</h2>
-                   <input className="form-control" placeholder='Enter category' id='form-input' value={change}
+                   <input className="form-control" placeholder='Enter category' id='form-input'
                    onChange={ChangeInput}></input>
-                   <input className="form-control" placeholder='Enter category' id='form-input' 
-                   onChange={(e)=>{setChangeInput(e.target.value);
-                    console.log(changeInput)
-                                   
-                   }}></input>
+                   
                    <button type="button" className="btn btn-primary" id='form-button' onClick={click}>Submit</button>
                </form>
                : ''}
@@ -58,8 +61,7 @@ function Categories() {
                
                 </div>
             </div>
-            {change}
-            <div>{changeInput}</div>
+            
             
         </div>
     )
