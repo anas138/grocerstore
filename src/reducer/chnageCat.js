@@ -1,4 +1,4 @@
-const ChangeCat=(state=0,action)=>{
+const ChangeCat=(state=[],action)=>{
     switch (action.type){
         case 'change':{
             return action.payload

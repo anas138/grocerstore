@@ -4,7 +4,8 @@ import {useDispatch, useSelector}from 'react-redux'
 import NavBar from './Components/NavBar.js'
 import {Increment,Change} from './action/index.js'
 import Categories from './Components/Categories.js'
-
+import CategoryItems from './Components/CategoryItems.js'
+ 
 function App() {
   const counter=useSelector(state=>state.Counter);
   const change=useSelector(state=>state.ChangeCat);
@@ -13,9 +14,14 @@ function App() {
     <Router>
     <div className="App">
       <NavBar/>
-      <Route path='/categories'>
+      <Switch>
+      <Route  exact path='/categories'>
       <Categories/>
       </Route>
+      <Route path='/categories/items'>
+        <CategoryItems/>
+      </Route>
+      </Switch>
      <h1>anas</h1>
      <button onClick={()=>UseDispatch(Increment())}>increment</button>
      {counter}

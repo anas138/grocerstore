@@ -52,6 +52,12 @@
 }
 #catImage{
     border-radius: 5px;
+    
+    
+}
+#catImage:hover{
+    cursor: pointer;
+    transform: scale(1.05);
 }
 #heading{
     padding: 2px;
@@ -95,4 +101,7 @@
     background-color: white;
     align-items: center;
     margin: 10px;
+}
+#heading{
+    margin-bottom: 30px;
 }

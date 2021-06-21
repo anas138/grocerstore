@@ -3,6 +3,7 @@ import { FaRegPlusSquare } from "react-icons/fa";
 import {useDispatch,useSelector} from 'react-redux'
 import{Change} from '../action/index'
 import axios from 'axios';
+import {Link} from 'react-router-dom'
 
 
 
@@ -14,7 +15,7 @@ function Categories() {
         .then(res=>{
             console.log(res.data);
             UseDispatch(Change(res.data));
-            console.log('anas',change)
+            //console.log(change)
         })
 
     },[])
@@ -63,17 +64,26 @@ function Categories() {
 
             </div>
             <div  id='mainid'>
-                <div id='catDiv'>
-                <h2 id='categories'>Fruits and Vegetables</h2>
-                </div>
-                <div id='main'>
-                <div id='items'>
-                    <img src='download (4).jpg' id='catImage'/>
-                    <h5>Fruits</h5>
-                </div>
+                {change.map(index=>{
+                   return <div>
+                     <div id='catDiv'>
+                           <h2 id='categories'>{index.name}</h2>
+                           </div>
+                            <div id='main'>
+                            <div id='items'>
+                                <Link to='/categories/items'>
+                                <img src='download (4).jpg' id='catImage'/>
+                                </Link>
+                                <h5 id='heading'>{index.name}</h5>
+                            </div>
+            
+                           
+                            </div>
+                            </div>
 
+                })}
+                
                
-                </div>
             </div>
                       
             
