@@ -54,6 +54,7 @@
     border-radius: 5px;
     
     
+    
 }
 #catImage:hover{
     cursor: pointer;
@@ -78,7 +79,6 @@
     padding: 20px;
     background-color: white;
     border-radius: 5px;
-    height: 100vh;
     top: 0;
     display: flex;
     align-items: center;
@@ -104,4 +104,39 @@
 }
 #heading{
     margin-bottom: 30px;
+}
+#subcat2{
+    display: flex;
+    flex-direction: column;
+}
+.nameItems{
+    display: block;
+}
+.itemDiv{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border: 2px solid gray;
+    border-radius: 5px;
+    padding: 10px;
+}
+.itemDiv1{
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+    flex-flow: column;
+    border:0;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 10px;
+    width: 250px;
+    background-color: lightgray;
+    box-shadow: rgba(0, 0, 0, .5);
+
+}
+.imgdiv{
+    width: 100%;
+    height: 100px;
+
 }
