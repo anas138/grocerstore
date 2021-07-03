@@ -1,7 +1,7 @@
 const Counter=(state=0,action)=>{
     switch(action.type){
         case 'increment':
-            return state+1;
+            return action.payload;
         default:
         return state;
     }

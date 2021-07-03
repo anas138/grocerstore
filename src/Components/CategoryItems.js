@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React,{useState,useEffect} from 'react'
 import { FaRegPlusSquare } from "react-icons/fa";
+import {useDispatch} from 'react-redux'
+import {Increment} from '../action/index'
 
 
 function CategoryItems() {
@@ -10,6 +12,7 @@ function CategoryItems() {
     const [changePrice,setChangePrice]=useState('');
     const[itemData,setItemData]=useState([]);
     const[addCart,setAddCart]=useState([]);
+    const dispatch = useDispatch();
     
      useEffect(()=>{
          axios.get('http://localhost:3001/items').then(res=>{
@@ -29,12 +32,57 @@ function CategoryItems() {
     const handleAddToCart=(e)=>{
         
         let data=(localStorage.getItem('cartItems'));
+        console.log('value',e.target.value);
+       if(data!==null){
         
-          let res = data.concat(',',e.target.value)
-        console.log(res);
+         
+         data=JSON.parse(data); 
+         if(data.indexOf(e.target.value)>-1){
+            console.log('anas');
+         }
+         let dataArray=[];
+         data.map(index=>{
+             //console.log(index.id);
+              dataArray=[...dataArray,index.id]
+               
+
+             
+         })
+         console.log(dataArray);
         
+             if(parseInt( dataArray.indexOf( e.target.value))<=-1){
+                  data.push({id:e.target.value,
+                  quantity:1});
+                  console.log('anas');
+                  localStorage.setItem('cartItems',JSON.stringify(data));
+                  let counter= + localStorage.getItem('counter')
+                  counter+=1;
+                  localStorage.setItem('counter',counter.toString());
+                  dispatch(Increment(localStorage.getItem('counter')));
+
+             }
+         
+         
+        // console.log(data);
+         //data=[...data,e.target.value];
+         
+         
+               
+           
+       }
+       else{
+           const array=['anas',{
+               id:e.target.value,
+               quantity:1
+            
+            }]
+        localStorage.setItem('cartItems',JSON.stringify(array));
+        localStorage.setItem('counter','1');
+        dispatch(Increment(localStorage.getItem('counter')));
         
-     localStorage.setItem('cartItems',res.toString());
+       }
+        
+    // localStorage.setItem('cartItems',res.toString());
 
     }
     return (

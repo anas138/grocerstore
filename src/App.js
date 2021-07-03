@@ -23,7 +23,7 @@ function App() {
       </Route>
       </Switch>
      <h1>anas</h1>
-     <button onClick={()=>UseDispatch(Increment())}>increment</button>
+     <button >increment</button>
      {counter}
      
      

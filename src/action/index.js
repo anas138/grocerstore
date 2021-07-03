@@ -1,6 +1,7 @@
-export const Increment=()=>{
+export const Increment=(nr)=>{
     return{
-        type:'increment'
+        type:'increment',
+        payload:nr
     }
 }
 
