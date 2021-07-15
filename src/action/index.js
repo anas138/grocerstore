@@ -10,4 +10,13 @@ return{
     type:'change',
     payload:nr
 }
+
 }
+export const SubTotal1=(nr)=>{
+    return{
+        type:'subtotal',
+        payload:nr
+    }
+    
+    }
+

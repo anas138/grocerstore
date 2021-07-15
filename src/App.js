@@ -5,6 +5,8 @@ import NavBar from './Components/NavBar.js'
 import {Increment,Change} from './action/index.js'
 import Categories from './Components/Categories.js'
 import CategoryItems from './Components/CategoryItems.js'
+import CartItems from './Components/CartItems.js'
+import Footer from './Components/footer.js'
  
 function App() {
   const counter=useSelector(state=>state.Counter);
@@ -21,10 +23,12 @@ function App() {
       <Route path='/categories/items'>
         <CategoryItems/>
       </Route>
+      <Route  path='/cart'>
+        <CartItems/>
+      </Route>
       </Switch>
-     <h1>anas</h1>
-     <button >increment</button>
-     {counter}
+      
+    <Footer/>
      
      
     </div>

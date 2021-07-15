@@ -11,23 +11,38 @@ function CategoryItems() {
     const [changeWeight,setChangeWeight]=useState('');
     const [changePrice,setChangePrice]=useState('');
     const[itemData,setItemData]=useState([]);
-    const[addCart,setAddCart]=useState([]);
+    const [image,setImage]=useState();
     const dispatch = useDispatch();
     
      useEffect(()=>{
          axios.get('http://localhost:3001/items').then(res=>{
             setItemData(res.data);
+            console.log('i',res.data);
          })
-     })
+     },[]);
     const handleClick=()=>{
-        axios.post('http://localhost:3001/items',{
+        console.log(image);
+        const formData=new FormData();
+        formData.append('file',image);
+        formData.append('upload_preset','zjxqum2o');
+        axios.post('https://api.cloudinary.com/v1_1/dytyrk20i/image/upload',formData)
+        .then(res=>{
+            axios.post('http://localhost:3001/items',{
             name:changeName,
             weight:changeWeight,
             price:changePrice,
+            image:res.data.secure_url,
             fkSubCat:localStorage.getItem('subCatId')
         }).then(res=>{
             console.log(res.data);
         })
+            
+
+        })
+
+        
+
+        
     }
     const handleAddToCart=(e)=>{
         
@@ -58,7 +73,9 @@ function CategoryItems() {
                   let counter= + localStorage.getItem('counter')
                   counter+=1;
                   localStorage.setItem('counter',counter.toString());
-                  dispatch(Increment(localStorage.getItem('counter')));
+                  const c= JSON.parse( localStorage.getItem('cartItems'));
+                  const l= c.length - 1;
+                  dispatch(Increment(l));
 
              }
          
@@ -78,13 +95,20 @@ function CategoryItems() {
             }]
         localStorage.setItem('cartItems',JSON.stringify(array));
         localStorage.setItem('counter','1');
-        dispatch(Increment(localStorage.getItem('counter')));
+        const c= JSON.parse( localStorage.getItem('cartItems'));
+        const l= c.length - 1;
+        dispatch(Increment(l));
+        
         
        }
         
     // localStorage.setItem('cartItems',res.toString());
 
     }
+    const imageChange=(e)=>{
+        console.log(e.target.files[0]);
+        setImage(e.target.files[0])
+        }
     return (
         <div className='container'>
 
@@ -95,6 +119,7 @@ function CategoryItems() {
                     <input className='form-control'  placeholder='Enter name' onChange={(e)=>{setChangeName(e.target.value)}}></input>
                     <input className='form-control'  placeholder='Enter weight' onChange={(e)=>{setChangeWeight(e.target.value)}}></input>
                     <input className='form-control'  placeholder='Enter price' onChange={(e)=>{setChangePrice(e.target.value)}}></input>
+                    <input className="form-control"  id='form-input' type='file' onChange={imageChange}></input>
                     <button type="button" className="btn btn-primary" id='form-button' onClick={handleClick} >Submit</button>
                 </form>
        :''}
@@ -110,7 +135,7 @@ function CategoryItems() {
                 {
                        return <div className=' col-2 itemDiv1'>
                         <div className='imgdiv'>
-                        <img src='download (4).jpg'/>
+                        <img src={index.image} width='100%' height='200px' id='catImage1'/>
                         </div>
                         <label className='nameItems'>{index.name}</label>
                         <label className='nameItems'>{index.weight}gm</label>

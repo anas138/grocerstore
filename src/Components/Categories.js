@@ -15,6 +15,8 @@ function Categories() {
     const [catFk,setCatFk]=useState('');
     const [subCatData,setSubCatData]=useState([]);
     const change=useSelector(state=>state.ChangeCat);
+    const [image,setImage]=useState();
+    const [imageUrl,setImageurl]=useState();
     const UseDispatch=useDispatch();
     useEffect(()=>{
         axios.get('http://localhost:3001/category')
@@ -52,21 +54,37 @@ function Categories() {
         setChangeInput(e.target.value);
     }
     const subClickHandle=()=>{
-        console.log(catFk);
-        axios.post('http://localhost:3001/subCat',{
-            name:changeSubCat,
-            fkCat:catFk
-                  
-        }).then(res=>{
-            console.log(res);
-        });
+       // console.log(catFk);
+        console.log(image);
+        const formData=new FormData();
+        formData.append('file',image);
+        formData.append('upload_preset','zjxqum2o');
+        axios.post('https://api.cloudinary.com/v1_1/dytyrk20i/image/upload',formData)
+        .then(res=>{
+            console.log(res.data.secure_url);
+            setImageurl(res.data.secure_url);
+            axios.post('http://localhost:3001/subCat',{
+                name:changeSubCat,
+                fkCat:catFk,
+                image:res.data.secure_url
+                      
+            }).then(res=>{
+                console.log(res);
+            });
+        })
+     
     }
+const imageChange=(e)=>{
+console.log(e.target.files[0]);
+setImage(e.target.files[0])
+}
+
     return (
         
         <div className='container'>
             <div>
             <div id='catDiv1'>
-               <h1>Categories</h1>
+               <h1 >Categories</h1>
                <FaRegPlusSquare id='addCategory' onClick={()=>{setCat(1);
             setSubCat(0)}}/>
                </div>
@@ -86,7 +104,7 @@ function Categories() {
                     <input className="form-control" placeholder='Enter sub category' id='form-input' onChange={(e)=>{
                         setChangeSubCat(e.target.value);
                     }}></input>
-                    <input className="form-control"  id='form-input' type='file'></input>
+                    <input className="form-control"  id='form-input' type='file' onChange={imageChange}></input>
                     <button type="button" className="btn btn-primary" id='form-button' onClick={subClickHandle} >Submit</button>
  
                 </form>:''}
@@ -109,19 +127,20 @@ function Categories() {
                                 setCat(0);
                                 setCatFk(index._id);
                             }} /> 
+                            <div className='igrid' id='igrid'>
                             {subCatData.map(index2=>{
                                 
                                 if(index2.fkCat==index._id){
                                     return <div id='subcat2' >                             
                                     <Link to='/categories/items'>
-                                    <img src='download (4).jpg' id='catImage' onClick={()=>{localStorage.setItem('subCatId',index2._id)}}/>
+                                    <img src={index2.image} id='catImage' onClick={()=>{localStorage.setItem('subCatId',index2._id)}}/>
                                     </Link>
                                     <h5 id='heading'>{index2.name}</h5>
                                     </div> 
                                 }
                             })} 
                             
-
+                            </div>
                             </div>
             
                            
