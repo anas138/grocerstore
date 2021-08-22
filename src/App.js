@@ -7,6 +7,7 @@ import Categories from './Components/Categories.js'
 import CategoryItems from './Components/CategoryItems.js'
 import CartItems from './Components/CartItems.js'
 import Footer from './Components/footer.js'
+import CarouselComp from './Components/Carousel.js' 
  
 function App() {
   const counter=useSelector(state=>state.Counter);
@@ -17,18 +18,23 @@ function App() {
     <div className="App">
       <NavBar/>
       <Switch>
-      <Route  exact path='/categories'>
+        <Route exact path="/"> 
+          <CarouselComp/>
+          </Route>
+      <Route exact  path='/categories'>
       <Categories/>
       </Route>
-      <Route path='/categories/items'>
+      <Route  path='/categories/items'>
         <CategoryItems/>
       </Route>
       <Route  path='/cart'>
         <CartItems/>
       </Route>
       </Switch>
+     
       
     <Footer/>
+    
      
      
     </div>

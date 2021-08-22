@@ -3,6 +3,9 @@ import React,{useState,useEffect} from 'react'
 import { FaRegPlusSquare } from "react-icons/fa";
 import {useDispatch} from 'react-redux'
 import {Increment} from '../action/index'
+import Tippy from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css'; // optional
+import Loading from './loading.js' 
 
 
 function CategoryItems() {
@@ -13,14 +16,21 @@ function CategoryItems() {
     const[itemData,setItemData]=useState([]);
     const [image,setImage]=useState();
     const dispatch = useDispatch();
+    const [loading,setLoading]=useState(0);
+    const[cickFlag,setClickFlag]=useState(0);
     
      useEffect(()=>{
+        setLoading(loading=>1);
          axios.get('http://localhost:3001/items').then(res=>{
             setItemData(res.data);
             console.log('i',res.data);
+            console.log("anasData");
+            setLoading(loading=>0);
+            document.body.style.overflow="";
          })
-     },[]);
+     },[cickFlag]);
     const handleClick=()=>{
+        setLoading(loading=>1);
         console.log(image);
         const formData=new FormData();
         formData.append('file',image);
@@ -35,6 +45,9 @@ function CategoryItems() {
             fkSubCat:localStorage.getItem('subCatId')
         }).then(res=>{
             console.log(res.data);
+            setCat(cat=>0);
+            setClickFlag(cickFlag=>!cickFlag);
+            
         })
             
 
@@ -126,8 +139,13 @@ function CategoryItems() {
                     
             
             <div>
-                <FaRegPlusSquare id='addCategory' onClick={()=>{setCat(1)}}/>    
+            <Tippy content="add new item">
+                <span>
+                <FaRegPlusSquare id='addCategory' onClick={()=>{setCat(1)}}/>  
+                </span> 
+                </Tippy> 
             </div>
+            
             
                  <div className='row itemDiv'>
                     {itemData.map(index=>{
@@ -147,7 +165,7 @@ function CategoryItems() {
                     </div>
                     
                     
-            
+                    {loading==1?<Loading/>:''} 
             
         </div>
     )

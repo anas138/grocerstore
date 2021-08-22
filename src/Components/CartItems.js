@@ -2,6 +2,7 @@ import React,{useEffect,useState} from 'react'
 import axios from 'axios'
 import {useDispatch,useSelector} from 'react-redux'
 import {Increment,SubTotal1} from '../action/index.js'
+import Loading from './loading.js' 
 
 
 function CartItems() {
@@ -9,10 +10,14 @@ function CartItems() {
     const [localData,setLocalData]=useState([]);
     const UseDispath=useDispatch();
     const[subTotal,setSubTotal]=useState(0);
+    const [loading,setLoading]=useState(0);
     const quantity=useSelector(state=>state.Price)
     useEffect(async()=>{
+        setLoading(loading=>1);
       await  axios.get('http://localhost:3001/items').then(res=>{
             setData(res.data);
+            setLoading(loading=>0);
+            document.body.style.overflow="";
             
             
             
@@ -134,7 +139,7 @@ function CartItems() {
                            <button id='cancelCartButton'className="btn btn-danger"value={index.id} onClick={canceHandle}>x</button>
                            <div className='mainCart'>
                     
-                           <img src={data.image} id='catImage' height='100px' width='100px'></img>
+                           <img src={data.image} id='cartImage' height='100px' width='100px'></img>
                            <div className='cartItem'>
                               <label id='textCart'>{data.name}</label>
                               <small>{data.weight} mg</small> <small>Quantity {index.quantity}</small>
@@ -171,7 +176,7 @@ function CartItems() {
             </div>
             <button className="btn btn-primary">Place Order</button>
 
-
+            {loading==1?<Loading/>:''} 
         
         </div>
     )

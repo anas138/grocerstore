@@ -5,7 +5,8 @@ import { FaShoppingCart } from "react-icons/fa";
 import{Link} from 'react-router-dom';
 import {Increment,SubTotal1} from '../action/index.js'
 import axios from 'axios'
-
+import Tippy from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css'; // optional
 
 
 
@@ -46,11 +47,17 @@ import axios from 'axios'
     return (
         <div className='Container' id='navBar'>
             <Link to='/categories'>
-           <button type="button" className="btn btn-primary" id='catButton'><FaAlignJustify/>Categories</button>
+           <button type="button"  id='catButton'><FaAlignJustify/>Categories</button>
            </Link>
            <input type='text' placeholder='Search' id='inputSearch' className="form-control"></input> 
            <Link to='/cart' onClick={handleClick}>
-           <div><FaShoppingCart id='bucketId'></FaShoppingCart>{cartCounter==null?'': <span id='counter'>{counter}</span>}</div>
+           <div>
+           <Tippy content="Cart">
+               <span>  
+               <FaShoppingCart id='bucketId'></FaShoppingCart>
+               </span>
+               </Tippy>
+               {cartCounter==null?'': <span id='counter'>{counter}</span>}</div>
            </Link>
            
         </div>
